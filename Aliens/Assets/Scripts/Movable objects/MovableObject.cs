@@ -7,7 +7,6 @@ public class MovableObject : MonoBehaviour
     [SerializeField] private bool _enabled = true;
     [SerializeField] private float _threshold = 25f;
     [SerializeField] private float _speed = 1f;
-    [SerializeField] private float _collidersOffset = .01f;
 
     private Vector2 _mouseInitPosition;
     private Vector2 _mouseDragPosition;
@@ -18,6 +17,7 @@ public class MovableObject : MonoBehaviour
     private Collider2D _collider;
 
     private static bool _canAnyBeMoved = true;
+    private static float _collidersOffset = .05f;
 
     private void Awake()
     {
@@ -73,7 +73,7 @@ public class MovableObject : MonoBehaviour
 
         while (time < 1f)
         {
-            time += _speed * 2.5f * Time.fixedDeltaTime;
+            time += _speed * 2f * Time.fixedDeltaTime;
 
             var lerpValue = EasingSmoothSquared(time);
             transform.position = LerpVector(transform.position, newPos, lerpValue);
@@ -104,8 +104,8 @@ public class MovableObject : MonoBehaviour
         var size = _collider.bounds.size;
         var sizeX = new Vector2(size.x - _collidersOffset * 2f, size.y *.1f);
         var sizeY = new Vector2(size.x * .1f, size.y - _collidersOffset * 2f);
-        var offset = _collidersOffset;
         var selfPos = startPosition;
+        var triggerOffset = new Vector2(size.x * .05f, size.y * .05f);
 
         if (moveDirection == Vector2.up)
         {
@@ -114,11 +114,11 @@ public class MovableObject : MonoBehaviour
             {
                 if (hit.collider.isTrigger)
                 {
-                    var intermediatePosition = new Vector2(selfPos.x, hit.point.y);
+                    var intermediatePosition = new Vector2(selfPos.x, hit.point.y - triggerOffset.y);
                     return GetNewPositionFromMoveDirection(intermediatePosition, moveDirection, out hit);
                 }
 
-                return new Vector2(selfPos.x, hit.point.y - size.y / 2f - offset);
+                return new Vector2(selfPos.x, hit.point.y - size.y / 2f);
             }
         }
 
@@ -129,11 +129,11 @@ public class MovableObject : MonoBehaviour
             {
                 if (hit.collider.isTrigger)
                 {
-                    var intermediatePosition = new Vector2(selfPos.x, hit.point.y);
+                    var intermediatePosition = new Vector2(selfPos.x, hit.point.y + triggerOffset.y);
                     return GetNewPositionFromMoveDirection(intermediatePosition, moveDirection, out hit);
                 }
 
-                return new Vector2(selfPos.x, hit.point.y + size.y / 2f + offset);
+                return new Vector2(selfPos.x, hit.point.y + size.y / 2f);
             }
         }
 
@@ -144,11 +144,11 @@ public class MovableObject : MonoBehaviour
             {
                 if (hit.collider.isTrigger)
                 {
-                    var intermediatePosition = new Vector2(hit.point.x, selfPos.y);
+                    var intermediatePosition = new Vector2(hit.point.x - triggerOffset.x, selfPos.y);
                     return GetNewPositionFromMoveDirection(intermediatePosition, moveDirection, out hit);
                 }
 
-                return new Vector2(hit.point.x - size.x / 2f - offset, selfPos.y);
+                return new Vector2(hit.point.x - size.x / 2f, selfPos.y);
             }
         }
 
@@ -159,11 +159,11 @@ public class MovableObject : MonoBehaviour
             {
                 if (hit.collider.isTrigger)
                 {
-                    var intermediatePosition = new Vector2(hit.point.x, selfPos.y);
+                    var intermediatePosition = new Vector2(hit.point.x + triggerOffset.x, selfPos.y);
                     return GetNewPositionFromMoveDirection(intermediatePosition, moveDirection, out hit);
                 }
 
-                return new Vector2(hit.point.x + size.x / 2f + offset, selfPos.y);
+                return new Vector2(hit.point.x + size.x / 2f, selfPos.y);
             }
         }
 

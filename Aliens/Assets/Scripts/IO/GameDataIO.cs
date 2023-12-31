@@ -14,7 +14,7 @@ public static class GameDataIO
 
     public static GameData LoadData()
     {
-        return DataIOBase.LoadData<GameData>(_path);
+        return DataIOBase.LoadData<GameData>(_path) ?? new GameData();
     }
 }
 
@@ -23,9 +23,11 @@ public class GameData
 {
     /// <summary>
     /// int  - Number of level
-    /// bool - State of level (Completed or not)
+    /// bool - State of level (Blocekd or not)
     /// </summary>
-    public Dictionary<int, bool> Levels = new Dictionary<int, bool>();
+    public Dictionary<int, bool> Levels = new();
+
+    public bool ShowAds = true;
 
     public bool IsLevelBlocked(int levelNumber)
     {

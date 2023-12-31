@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -21,12 +20,23 @@ public class LevelController : MonoBehaviour
     [SerializeField] private Button _nextLevelButton;
     [SerializeField] private Button _pauseButton;
     [SerializeField] private Button _unpauseButton;
+    [SerializeField] private Button _reviveButton;
 
     [Space]
     [SerializeField] private TextMeshProUGUI _loseTipText;
     [SerializeField] private TextMeshProUGUI _numberOfMovesText;
 
     private const string _levelSceneBaseName = "Level ";
+
+    public void RevivePlayer(int numberOfMoves)
+    {
+        _numberOfMoves = numberOfMoves;
+        SetNumberOfMovesText();
+
+        MovableObject.SetBlock(false);
+        _gameUI.gameObject.SetActive(true);
+        _losePanel.gameObject.SetActive(false);
+    }
 
     private void Start()
     {
@@ -92,7 +102,7 @@ public class LevelController : MonoBehaviour
 
     private void OnTriggerWakingUpObject()
     {
-        LoseLevel("Try not to touch objects that might wake up the player");
+        LoseLevel("Try not to touch objects that might wake up the player", false);
     }
 
     private void OnRestartButtonClick()
@@ -133,7 +143,7 @@ public class LevelController : MonoBehaviour
 
         if (_numberOfMoves <= 0)
         {
-            LoseLevel("Try to use your moves more competently and sparingly, they can end at the wrong time");
+            LoseLevel("Try to use your moves more competently and sparingly, they can end at the wrong time", true);
         }
     }
 
@@ -143,12 +153,15 @@ public class LevelController : MonoBehaviour
         return int.Parse(name.Replace(_levelSceneBaseName, string.Empty));
     }
 
-    private void LoseLevel(string tip)
+    private void LoseLevel(string tip, bool showReviveButton)
     {
         MovableObject.SetBlock(true);
         _loseTipText.text = tip;
         _gameUI.gameObject.SetActive(false);
         _losePanel.gameObject.SetActive(true);
+
+        if (!showReviveButton)
+            Destroy(_reviveButton.gameObject);
     }
 
     private void SetNumberOfMovesText()

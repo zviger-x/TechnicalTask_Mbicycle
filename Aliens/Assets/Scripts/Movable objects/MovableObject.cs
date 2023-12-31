@@ -23,7 +23,7 @@ public class MovableObject : MonoBehaviour
     public static Action<MovableObject> OnObjectMoved;
     private static bool _canAnyBeMoved = true;
     private static bool _blocked = false;
-    private static float _collidersOffset = .05f;
+    private static readonly float _collidersOffset = .05f;
 
     private void Awake()
     {
@@ -63,7 +63,7 @@ public class MovableObject : MonoBehaviour
                 _canCurrentBeMoved = _canAnyBeMoved = false;
                 IsAnyMoving = true;
                 _isMoving = true;
-                StartCoroutine(MoveAnimationCoroutine((Vector2)newPos, hit));
+                StartCoroutine(MoveAnimationCoroutine((Vector2)newPos));
                 PlaySwipeSound();
             }
         }
@@ -97,7 +97,7 @@ public class MovableObject : MonoBehaviour
         return false;
     }
 
-    private IEnumerator MoveAnimationCoroutine(Vector2 newPos, RaycastHit2D hit)
+    private IEnumerator MoveAnimationCoroutine(Vector2 newPos)
     {
         var time = 0f;
 

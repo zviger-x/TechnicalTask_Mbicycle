@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 5753636767473416581}
   m_Layer: 0
   m_Name: Trigger
-  m_TagString: Untagged
+  m_TagString: EndLevel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,7 +108,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 1}
+  m_Size: {x: 1.9, y: 0.9}
   m_EdgeRadius: 0
 --- !u!1 &6152826997374069073
 GameObject:
@@ -176,8 +176,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.0015000105, y: -0.50004995, z: 0}
-    m_Extent: {x: 2.7986999, y: 2.3004498, z: 0}
+    m_Center: {x: 0.00034999847, y: -0.50039995, z: 0}
+    m_Extent: {x: 2.79835, y: 2.3003001, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -258,8 +258,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.00015002489, y: -0.3249, z: 0}
-    m_Extent: {x: 1.2492499, y: 0.9252, z: 0}
+    m_Center: {x: 0.00069999695, y: -0.32544997, z: 0}
+    m_Extent: {x: 1.2497, y: 0.92505, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -433,7 +433,7 @@ MonoBehaviour:
   - {x: 1.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: -40156
+  m_InstanceId: 63776
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 1.5, y: 0.5, z: 0}

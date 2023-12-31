@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(AudioSource))]
 public class MovableObject : MonoBehaviour
 {
     [SerializeField] private bool _enabled = true;
     [SerializeField] private float _threshold = 25f;
     [SerializeField] private float _speed = 1f;
+    [SerializeField] private AudioClip _swipeSound; 
 
     private Vector2 _mouseInitPosition;
     private Vector2 _mouseDragPosition;
@@ -15,12 +18,17 @@ public class MovableObject : MonoBehaviour
     private bool _canCurrentBeMoved = true;
 
     private Collider2D _collider;
+    private AudioSource _audioSource;
 
+    public static bool IsAnyMoving { get; private set; }
+    public static Action<MovableObject> OnObjectMoved;
     private static bool _canAnyBeMoved = true;
+    private static bool _blocked = false;
     private static float _collidersOffset = .05f;
 
     private void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
         _collider = GetComponent<Collider2D>();
         GetComponent<Rigidbody2D>().isKinematic = true;
     }
@@ -35,7 +43,7 @@ public class MovableObject : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (!_enabled || !_canAnyBeMoved || !_canCurrentBeMoved)
+        if (!_enabled || _blocked || !_canAnyBeMoved || !_canCurrentBeMoved)
             return;
 
         _mouseDragPosition = Input.mousePosition;
@@ -44,12 +52,15 @@ public class MovableObject : MonoBehaviour
         if (!_isMoving && offset.magnitude > _threshold)
         {
             _moveDirection = ConvertVectorToAxisDirection(offset);
+
             var newPos = GetNewPositionFromMoveDirection(transform.position, _moveDirection, out var hit);
-            if (newPos != null)
+            if (newPos != null && CheckNewPosDistanceIsCorrect(hit.point, _moveDirection))
             {
                 _canCurrentBeMoved = _canAnyBeMoved = false;
+                IsAnyMoving = true;
                 _isMoving = true;
                 StartCoroutine(MoveAnimationCoroutine((Vector2)newPos, hit));
+                PlaySwipeSound();
             }
         }
     }
@@ -62,9 +73,24 @@ public class MovableObject : MonoBehaviour
         _canCurrentBeMoved = true;
     }
 
-    private void OnHitObject(RaycastHit2D hit)
+    private bool CheckNewPosDistanceIsCorrect(Vector2 hitPoint, Vector2 moveDirection)
     {
-        Debug.Log(hit.transform.gameObject.name);
+        var distance = (hitPoint - (Vector2)transform.position).magnitude;
+        var th = .25f;
+
+        if (moveDirection == Vector2.up || moveDirection == Vector2.down)
+        {
+            var max = _collider.bounds.size.y / 2f + th;
+            return distance > max;
+        }
+
+        if (moveDirection == Vector2.left || moveDirection == Vector2.right)
+        {
+            var max = _collider.bounds.size.x / 2f + th;
+            return distance > max;
+        }
+
+        return false;
     }
 
     private IEnumerator MoveAnimationCoroutine(Vector2 newPos, RaycastHit2D hit)
@@ -73,6 +99,9 @@ public class MovableObject : MonoBehaviour
 
         while (time < 1f)
         {
+            if (_blocked)
+                break;
+
             time += _speed * 2f * Time.fixedDeltaTime;
 
             var lerpValue = EasingSmoothSquared(time);
@@ -81,10 +110,10 @@ public class MovableObject : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        IsAnyMoving = false;
         _isMoving = false;
         _canAnyBeMoved = true;
-
-        OnHitObject(hit);
+        OnObjectMoved?.Invoke(this);
     }
 
     private float EasingSmoothSquared(float x)
@@ -215,5 +244,18 @@ public class MovableObject : MonoBehaviour
         }
 
         return Vector2.zero;
+    }
+
+    private void PlaySwipeSound()
+    {
+        if (_swipeSound == null)
+            return;
+
+        _audioSource.PlayOneShot(_swipeSound, AudioController.Instance.IsMutedSounds ? 0f : 1f);
+    }
+
+    public static void SetBlock(bool blocked)
+    {
+        _blocked = blocked;
     }
 }

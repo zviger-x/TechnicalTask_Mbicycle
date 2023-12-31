@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D), typeof(AudioSource))]
@@ -31,6 +30,11 @@ public class MovableObject : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _collider = GetComponent<Collider2D>();
         GetComponent<Rigidbody2D>().isKinematic = true;
+    }
+
+    private void OnDestroy()
+    {
+        CompleteMove();
     }
 
     private void OnMouseDown()
@@ -110,6 +114,11 @@ public class MovableObject : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        CompleteMove();
+    }
+
+    private void CompleteMove()
+    {
         IsAnyMoving = false;
         _isMoving = false;
         _canAnyBeMoved = true;

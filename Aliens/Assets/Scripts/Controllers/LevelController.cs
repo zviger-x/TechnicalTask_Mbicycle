@@ -26,6 +26,9 @@ public class LevelController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _loseTipText;
     [SerializeField] private TextMeshProUGUI _numberOfMovesText;
 
+    [Space]
+    [SerializeField] private InterstitialAds _interstitialAds;
+
     private const string _levelSceneBaseName = "Level ";
 
     public void RevivePlayer(int numberOfMoves)
@@ -98,6 +101,8 @@ public class LevelController : MonoBehaviour
 
         _gameUI.gameObject.SetActive(false);
         _winPanel.gameObject.SetActive(true);
+
+        _interstitialAds.ShowAd();
     }
 
     private void OnTriggerWakingUpObject()
@@ -162,6 +167,8 @@ public class LevelController : MonoBehaviour
 
         if (!showReviveButton)
             Destroy(_reviveButton.gameObject);
+
+        _interstitialAds.ShowAd();
     }
 
     private void SetNumberOfMovesText()

@@ -19,6 +19,11 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
         _showAds = GameDataIO.LoadData().ShowAds;
     }
 
+    private void Start()
+    {
+        LoadAd();
+    }
+
     // Load content to the Ad Unit:
     public void LoadAd()
     {
@@ -45,7 +50,6 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void OnUnityAdsAdLoaded(string adUnitId)
     {
         // Optionally execute code if the Ad Unit successfully loads content.
-        ShowAd();
     }
 
     public void OnUnityAdsFailedToLoad(string _adUnitId, UnityAdsLoadError error, string message)

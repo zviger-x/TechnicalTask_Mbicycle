@@ -12,7 +12,7 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
     [SerializeField] string _iOSAdUnitId = "Rewarded_iOS";
     string _adUnitId = null; // This will remain null for unsupported platforms
 
-    void Awake()
+    private void Awake()
     {
         // Get the Ad Unit ID for the current platform:
 #if UNITY_IOS
@@ -27,6 +27,11 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         _showAdButton.interactable = false;
 
         _showAdButton.GetComponentInChildren<TextMeshProUGUI>().text = $"+{_numberOfMoves} moves";
+    }
+
+    private void Start()
+    {
+        LoadAd();
     }
 
     // Call this public method when you want to get an ad ready to show.

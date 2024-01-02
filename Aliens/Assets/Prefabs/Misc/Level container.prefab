@@ -257,19 +257,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8740719823546443266}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 815066901121087266}
-        m_TargetAssemblyTypeName: InterstitialAds, Assembly-CSharp
-        m_MethodName: LoadAd
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2898209684087599657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1288,6 +1276,7 @@ MonoBehaviour:
   _reviveButton: {fileID: 8833028955738556075}
   _loseTipText: {fileID: 505698308452730036}
   _numberOfMovesText: {fileID: 2859243328343719465}
+  _interstitialAds: {fileID: 815066901121087266}
 --- !u!1 &2247121101409977642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1545,19 +1534,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5130010987352476564}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 815066901121087266}
-        m_TargetAssemblyTypeName: InterstitialAds, Assembly-CSharp
-        m_MethodName: LoadAd
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &7076580946799220057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2065,19 +2042,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6096965651649377497}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 815066901121087266}
-        m_TargetAssemblyTypeName: InterstitialAds, Assembly-CSharp
-        m_MethodName: LoadAd
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &3764781091421404502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3628,19 +3593,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5565584403561663958}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 815066901121087266}
-        m_TargetAssemblyTypeName: InterstitialAds, Assembly-CSharp
-        m_MethodName: LoadAd
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &6772373264991414798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6052,7 +6005,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 857763528235416604, guid: 575fe8d4aaae03c48ba5f76f3ac71984, type: 3}
       propertyPath: m_InstanceId
-      value: -214954
+      value: -37268
       objectReference: {fileID: 0}
     - target: {fileID: 3257370170055050820, guid: 575fe8d4aaae03c48ba5f76f3ac71984, type: 3}
       propertyPath: m_Name
